@@ -1,11 +1,16 @@
 {
-  "name": "secrurity-group-service",
+  "name": "security-group-service",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:MagicMike90/serverless-security-group-list.git",
   "author": "Michael Luo <michael.luo0801@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest -w"
+  },
   "devDependencies": {
+    "aws-sdk-mock": "^5.1.0",
     "eslint": "^6.8.0"
   },
   "dependencies": {

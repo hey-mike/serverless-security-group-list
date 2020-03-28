@@ -1,7 +1,15 @@
 {
+  "extends": "eslint:recommended",
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "commonjs": true,
+    "jest": true
   },
-  "extends": "eslint:recommended"
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  }
 }

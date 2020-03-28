@@ -13,7 +13,7 @@
 
 service: security-group-service
 app: security-group-service
-org: michael.luo
+org: michaelluo0801
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -55,8 +55,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  listSecurityGroup:
+    handler: src/api/securityGroup.list
+    description: 'list all EC2 security groups in an AWS Account.'
+    events:
+      - http:
+          path: security-groups
+          method: get
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
