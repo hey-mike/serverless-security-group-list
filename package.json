@@ -1,0 +1,15 @@
+{
+  "name": "secrurity-group-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MagicMike90/serverless-security-group-list.git",
+  "author": "Michael Luo <michael.luo0801@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.648.0",
+    "jest": "^25.2.3"
+  }
+}
