@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const SecurityGroupService = require('../../src/services/securityGroupService');
-const emptySecurityList = require('./mocks/emptySecurityList');
+const { emptySecurityList, securityList } = require('../mocks/securityGroups');
 
 jest.mock('aws-sdk');
 
@@ -9,7 +9,7 @@ AWS.EC2 = jest.fn().mockImplementation(() => ({
   describeSecurityGroups: mockEC2DescribeSecurityGroups
 }));
 
-describe('Security Group Service', () => {
+describe('Security Group API', () => {
   let securityGroupService;
 
   beforeEach(() => {
@@ -33,5 +33,19 @@ describe('Security Group Service', () => {
     expect(list).toEqual(emptySecurityList);
     expect(list).toHaveProperty('SecurityGroups');
     expect(list.SecurityGroups.length).toBe(0);
+  });
+
+  it('should return empty security group list', async () => {
+    mockEC2DescribeSecurityGroups.mockImplementation(params => {
+      return {
+        promise() {
+          return Promise.resolve(securityList);
+        }
+      };
+    });
+    const list = await securityGroupService.getSecurityGroups();
+    expect(list).toEqual(securityList);
+    expect(list).toHaveProperty('SecurityGroups');
+    expect(list.SecurityGroups.length).toBe(3);
   });
 });

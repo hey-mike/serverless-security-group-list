@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
-const SecurityGroupService = require('../../src/services/securityGroupService');
-const emptySecurityList = require('./mocks/emptySecurityList');
+const { list } = require('../../src/api/securityGroup');
+const emptySecurityList = require('../mocks/emptySecurityList');
+const { context, event } = require('../utils/serverless');
 
 jest.mock('aws-sdk');
 
@@ -10,17 +11,6 @@ AWS.EC2 = jest.fn().mockImplementation(() => ({
 }));
 
 describe('Security Group Service', () => {
-  let securityGroupService;
-
-  beforeEach(() => {
-    mockEC2DescribeSecurityGroups.mockReset();
-  });
-
-  it('should call EC2 class constructor 1 time', () => {
-    securityGroupService = new SecurityGroupService();
-    expect(AWS.EC2).toHaveBeenCalledTimes(1);
-  });
-
   it('should return empty security group list', async () => {
     mockEC2DescribeSecurityGroups.mockImplementation(params => {
       return {
@@ -29,9 +19,23 @@ describe('Security Group Service', () => {
         }
       };
     });
-    const list = await securityGroupService.getSecurityGroups();
-    expect(list).toEqual(emptySecurityList);
-    expect(list).toHaveProperty('SecurityGroups');
-    expect(list.SecurityGroups.length).toBe(0);
+    const res = await list(event, context);
+    expect(res).toHaveProperty('headers');
+    expect(res).toHaveProperty('body');
+    expect(res).toHaveProperty('statusCode');
+  });
+
+  it('should return full security group list', async () => {
+    mockEC2DescribeSecurityGroups.mockImplementation(params => {
+      return {
+        promise() {
+          return Promise.resolve(emptySecurityList);
+        }
+      };
+    });
+    const res = await list(event, context);
+    expect(res).toHaveProperty('headers');
+    expect(res).toHaveProperty('body');
+    expect(res).toHaveProperty('statusCode');
   });
 });
