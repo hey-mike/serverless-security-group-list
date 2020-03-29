@@ -12,7 +12,7 @@
 # Happy Coding!
 
 service: security-group-service
-app: security-group-service
+app: security-group-service # this settings is causing API Gateway fail to test
 org: michaelluo0801
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -52,7 +52,6 @@ functions:
           path: security-groups
           method: get
           cors: true
-          integration: LAMBDA
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 
 // setup mock
 const emptySecurityList = require('../mocks/emptySecurityList');
-const { context, event } = require('../utils/serverless');
+const { context, event } = require('../mocks/serverless');
 jest.mock('aws-sdk');
 
 const mockEC2DescribeSecurityGroups = jest.fn();

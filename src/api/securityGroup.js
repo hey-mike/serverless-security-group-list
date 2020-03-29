@@ -1,21 +1,14 @@
 const SecurityGroupService = require('../services/securityGroupService');
+const Response = require('./utils/response');
+
 const securityGroupService = new SecurityGroupService();
 
 module.exports.list = async (event, context) => {
-  let response = {
-    headers: {
-      'Content-Type': 'application/vnd.api+json'
-    }
-  };
   try {
     const data = await securityGroupService.getSecurityGroups();
-    response.statusCode = 200;
-    response.body = JSON.stringify(data);
+    return new Response(200, data);
   } catch (err) {
     context.serverlessSdk.captureError(err);
-    response.statusCode = err.statusCode ? err.statusCode : 500;
-    response.body = JSON.stringify(err);
+    return new Response(err.statusCode ? err.statusCode : 500, err);
   }
-
-  return response;
 };
