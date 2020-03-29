@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 
 // setup mock
-const emptySecurityList = require('../mocks/emptySecurityList');
+const { emptySecurityList, securityList } = require('../mocks/securityGroups');
 const { context, event } = require('../mocks/serverless');
 jest.mock('aws-sdk');
 
@@ -35,7 +35,7 @@ describe('Security Group Service', () => {
     mockEC2DescribeSecurityGroups.mockImplementation(params => {
       return {
         promise() {
-          return Promise.resolve(emptySecurityList);
+          return Promise.resolve(securityList);
         }
       };
     });
@@ -44,6 +44,7 @@ describe('Security Group Service', () => {
     expect(res).toHaveProperty('body');
     expect(res).toHaveProperty('statusCode');
     expect(res.statusCode).toBe(200);
+    expect(res.body.data).toBe(JSON.stringify(securityList));
   });
   it('should return error 403', async () => {
     mockEC2DescribeSecurityGroups.mockImplementation(params => {
