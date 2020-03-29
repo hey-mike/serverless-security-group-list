@@ -45,7 +45,23 @@ describe('Security Group Service', () => {
     expect(res).toHaveProperty('statusCode');
     expect(res.statusCode).toBe(200);
   });
+  it('should return error 403', async () => {
+    mockEC2DescribeSecurityGroups.mockImplementation(params => {
+      return {
+        promise() {
+          const error = new Error('Whoops!');
+          error.statusCode = 403;
+          throw error;
+        }
+      };
+    });
 
+    const res = await list(event, context);
+    expect(res).toHaveProperty('headers');
+    expect(res).toHaveProperty('body');
+    expect(res).toHaveProperty('statusCode');
+    expect(res.statusCode).toBe(403);
+  });
   it('should return error 500', async () => {
     mockEC2DescribeSecurityGroups.mockImplementation(params => {
       return {

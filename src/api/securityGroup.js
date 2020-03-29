@@ -4,9 +4,7 @@ const securityGroupService = new SecurityGroupService();
 module.exports.list = async (event, context) => {
   let response = {
     headers: {
-      'Content-Type': 'application/vnd.api+json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true
+      'Content-Type': 'application/vnd.api+json'
     }
   };
   try {
@@ -15,7 +13,7 @@ module.exports.list = async (event, context) => {
     response.body = JSON.stringify(data);
   } catch (err) {
     context.serverlessSdk.captureError(err);
-    response.statusCode = 500;
+    response.statusCode = err.statusCode ? err.statusCode : 500;
     response.body = JSON.stringify(err);
   }
 
