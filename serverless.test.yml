@@ -1,4 +1,11 @@
-- name: get list of security groups
+- name: should return status 401 when token is not provided
+  endpoint:
+    method: GET
+    path: /security-groups
+  response:
+    status: 401
+
+- name: should get list of security groups
   endpoint:
     method: GET
     path: /security-groups

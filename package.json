@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
-    "test:watch": "jest --coverage --watchAll"
+    "test:watch": "jest --coverage --watchAll",
+    "test:e2e": "sls test",
+    "deploy": "sls deploy"
   },
   "devDependencies": {
     "aws-sdk-mock": "^5.1.0",
