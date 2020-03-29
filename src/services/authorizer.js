@@ -23,17 +23,22 @@ var generatePolicy = function(principalId, effect, resource) {
   };
   return authResponse;
 };
-// A simple token-based authorizer example to demonstrate how to use an authorization token
-// to allow or deny a request. In this example, the caller named 'user' is allowed to invoke
-// a request if the client-supplied token value is 'allow'. The caller is not allowed to invoke
-// the request if the token value is 'deny'. If the token value is 'unauthorized' or an empty
-// string, the authorizer function returns an HTTP 401 status code. For any other token value,
-// the authorizer returns an HTTP 500 status code.
-// Note that token values are case-sensitive.
 
 module.exports.handler = function(event, context, callback) {
-  var token = event.authorizationToken;
-  switch (token) {
+  if (!event.authorizationToken) {
+    return callback('Unauthorized');
+  }
+
+  // get bearer token
+  const tokenParts = event.authorizationToken.split(' ');
+  const tokenValue = tokenParts[1];
+
+  if (!(tokenParts[0].toLowerCase() === 'bearer' && tokenValue)) {
+    // no auth token!
+    return callback('Unauthorized');
+  }
+
+  switch (tokenValue) {
     case 'allow':
       callback(null, generatePolicy('user', 'Allow', event.methodArn));
       break;
