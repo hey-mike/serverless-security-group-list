@@ -26,20 +26,11 @@ provider:
   region: ap-southeast-2
 
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
+iamRoleStatements:
+  - Effect: 'Allow'
+    Action:
+      - 'ec2:DescribeSecurityGroups'
+    Resource: '*'
 
 # you can define service wide environment variables here
 #  environment:
@@ -62,6 +53,7 @@ functions:
       - http:
           path: security-groups
           method: get
+          integration: LAMBDA
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

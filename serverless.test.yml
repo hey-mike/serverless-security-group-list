@@ -1,0 +1,6 @@
+- name: get list of security groups
+  endpoint:
+    method: GET
+    path: /security-groups
+  response:
+    status: 200
