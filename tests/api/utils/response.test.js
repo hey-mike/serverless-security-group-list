@@ -19,6 +19,8 @@ describe('Success Response class', () => {
     expect(response).toHaveProperty('headers');
     expect(response).toHaveProperty('statusCode');
     expect(response).toHaveProperty('body');
+    expect(response.body).toHaveProperty('data');
+    expect(response.body).not.toHaveProperty('errors');
   });
   it('should create a Response with status 200', () => {
     let response = new SuccessResponse(200, emptySecurityList);
@@ -42,6 +44,8 @@ describe('Error Response class', () => {
     expect(response).toHaveProperty('headers');
     expect(response).toHaveProperty('statusCode');
     expect(response).toHaveProperty('body');
+    expect(response.body).not.toHaveProperty('data');
+    expect(response.body).toHaveProperty('errors');
   });
   it('should create a Response with status 403', () => {
     const testMsg = JSON.stringify({ message: 'test' });
