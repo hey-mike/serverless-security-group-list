@@ -13,7 +13,7 @@ module.exports.list = async (event, context) => {
     const data = await securityGroupService.getSecurityGroups();
 
     // construct current resource url
-    const link = event.headers.Host + event.resource;
+    const link = `https://${event.headers.Host}${event.resource}`;
 
     // construct response payload
     const payload = new SuccessPayload(link, data);

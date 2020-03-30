@@ -37,3 +37,4 @@
       Authorization: bearer allow
   response:
     status: 200
+    body:

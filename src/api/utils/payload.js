@@ -11,10 +11,10 @@ class SuccessPayload extends Payload {
   constructor(link, body) {
     super(link);
     this.meta.totalCount = body.SecurityGroups.length;
-    this.data = body.SecurityGroups;
     this.link = {
       self: link
     };
+    this.data = body.SecurityGroups;
   }
 }
 class ErrorPayload extends Payload {
