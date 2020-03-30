@@ -5,7 +5,7 @@
   response:
     status: 401
 
-- name: should deny user request with status 403
+- name: should return status 403 when send deny as authorization token
   endpoint:
     method: GET
     path: /security-groups
@@ -16,7 +16,7 @@
   response:
     status: 403
 
-- name: should return Unsupported Media Type with status code 415
+- name: should return status code 415 Unsupported Media Type
   endpoint:
     method: GET
     path: /security-groups
@@ -26,7 +26,7 @@
   response:
     status: 415
 
-- name: should get list of security groups with status 200
+- name: should return status 200 with a list of security groups
   endpoint:
     method: GET
     path: /security-groups
