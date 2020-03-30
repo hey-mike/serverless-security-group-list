@@ -18,6 +18,7 @@ This service is to get the list of EC2 security groups of an AWS account
 
 ## Making a request
 
+- method: GET
 - header
   - `Content-Type: application/vnd.api+json` without any media type parameters.
   - `Accept` optional, but it cant have any media type
