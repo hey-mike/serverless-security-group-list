@@ -11,10 +11,22 @@
     path: /security-groups
   request:
     headers:
-      'Content-Type': 'application/vnd.api+json'
+      "Content-Type": "application/vnd.api+json"
       Authorization: bearer deny
   response:
     status: 403
+
+- name: should return status 406 when Accept is not valid
+  endpoint:
+    method: GET
+    path: /security-groups
+  request:
+    headers:
+      "Content-Type": "application/vnd.api+json"
+      Accept: application/vnd.api+json;charset=UTF8
+      Authorization: bearer allow
+  response:
+    status: 406
 
 - name: should return status code 415 Unsupported Media Type
   endpoint:
@@ -32,7 +44,7 @@
     path: /security-groups
   request:
     headers:
-      'Content-Type': application/vnd.api+json
+      "Content-Type": application/vnd.api+json
       Accept: application/vnd.api+json
       Authorization: bearer allow
   response:

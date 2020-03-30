@@ -18,6 +18,7 @@ This service is to get the list of EC2 security groups of an AWS account
 
 ## Making a request
 
+- endpoint: https://2mto8yqyqi.execute-api.ap-southeast-2.amazonaws.com/dev/security-groups
 - method: GET
 - header
   - `Content-Type: application/vnd.api+json` without any media type parameters.
