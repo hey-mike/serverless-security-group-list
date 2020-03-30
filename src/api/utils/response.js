@@ -20,8 +20,9 @@ class SuccessResponse extends Response {
 class ErrorResponse extends Response {
   constructor(status, error) {
     super(status);
-    const payload = new ErrorPayload(error);
-    this.body = JSON.stringify(payload);
+    const errors = new ErrorPayload();
+    errors.addError(error);
+    this.body = JSON.stringify(errors);
   }
 }
 

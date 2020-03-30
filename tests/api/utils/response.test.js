@@ -50,19 +50,25 @@ describe('Utils: Error Response class', () => {
     expect(body).toHaveProperty('errors');
   });
   it('should create a Response with status 403', () => {
-    const testMsg = { message: 'test' };
-    const response = new ErrorResponse(403, testMsg);
+    const errorMsg = new Error({
+      message: 'test'
+    });
+    const response = new ErrorResponse(403, errorMsg);
     expect(response.statusCode).toBe(403);
 
     const body = JSON.parse(response.body);
-    expect(body.errors).toEqual(testMsg);
+    expect(body).toHaveProperty('errors');
+    expect(body.errors).toEqual([errorMsg.message]);
   });
   it('should create a Response with status 500', () => {
-    const testMsg = { message: 'test' };
-    const response = new ErrorResponse(500, testMsg);
+    const errorMsg = new Error({
+      message: 'test'
+    });
+    const response = new ErrorResponse(500, errorMsg);
     expect(response.statusCode).toBe(500);
 
     const body = JSON.parse(response.body);
-    expect(body.errors).toEqual(testMsg);
+    expect(body).toHaveProperty('errors');
+    expect(body.errors).toEqual([errorMsg.message]);
   });
 });

@@ -15,9 +15,14 @@ class SuccessPayload extends Payload {
   }
 }
 class ErrorPayload extends Payload {
-  constructor(error) {
+  constructor(errors = []) {
     super();
-    this.errors = error;
+    this.errors = errors;
+  }
+  addError(error) {
+    if (error) {
+      this.errors.push(error.message);
+    }
   }
 }
 
