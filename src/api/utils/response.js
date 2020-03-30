@@ -1,4 +1,4 @@
-const _ = require('lodash');
+const { SuccessPayload, ErrorPayload } = require('./payload');
 
 class Response {
   constructor(status) {
@@ -6,27 +6,22 @@ class Response {
       'Content-Type': 'application/vnd.api+json'
     };
     this.statusCode = status;
-    this.body = {
-      meta: {
-        copyright: 'Copyright 2020 @Michael Luo.',
-        authors: ['Michael Luo']
-      }
-    };
+    this.body = {};
   }
 }
 
 class SuccessResponse extends Response {
   constructor(status, data) {
     super(status);
-    this.body.meta.totalCount = data ? data.SecurityGroups.length : 0;
-    this.body.data = data;
-    this.body = JSON.stringify(this.body);
+    const payload = new SuccessPayload(data);
+    this.body = JSON.stringify(payload);
   }
 }
 class ErrorResponse extends Response {
   constructor(status, error) {
     super(status);
-    this.body.errors = JSON.stringify(error);
+    const payload = new ErrorPayload(error);
+    this.body = JSON.stringify(payload);
   }
 }
 

@@ -46,7 +46,7 @@ describe('Security Group Service', () => {
     expect(res.statusCode).toBe(200);
 
     const body = JSON.parse(res.body);
-    expect(body.data).toEqual(securityList);
+    expect(body.data).toEqual(securityList.SecurityGroups);
   });
   it('should return error 403', async () => {
     mockEC2DescribeSecurityGroups.mockImplementation(params => {
