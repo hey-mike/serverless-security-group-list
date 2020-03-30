@@ -21,21 +21,22 @@ describe('Success Response class', () => {
     expect(response).toHaveProperty('headers');
     expect(response).toHaveProperty('statusCode');
     expect(response).toHaveProperty('body');
-    expect(response.body).toHaveProperty('data');
-    expect(response.body.meta).toHaveProperty('totalCount');
-    expect(response.body).not.toHaveProperty('errors');
   });
   it('should create a Response with status 200 with empty list', () => {
     let response = new SuccessResponse(200, emptySecurityList);
     expect(response.statusCode).toBe(200);
-    expect(response.body.data).toBe(JSON.stringify(emptySecurityList));
-    expect(response.body.meta.totalCount).toBe(0);
+
+    const body = JSON.parse(response.body);
+    expect(body.data).toEqual(emptySecurityList);
+    expect(body.meta.totalCount).toBe(0);
   });
   it('should create a Response with status 200 with full list', () => {
     let response = new SuccessResponse(200, securityList);
     expect(response.statusCode).toBe(200);
-    expect(response.body.data).toBe(JSON.stringify(securityList));
-    expect(response.body.meta.totalCount).toBe(securityList.SecurityGroups.length);
+
+    const body = JSON.parse(response.body);
+    expect(body.data).toEqual(securityList);
+    expect(body.meta.totalCount).toBe(securityList.SecurityGroups.length);
   });
   it('should create a Response with status 201', () => {
     const response = new SuccessResponse(201, null);

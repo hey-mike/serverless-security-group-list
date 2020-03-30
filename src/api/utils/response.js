@@ -19,7 +19,8 @@ class SuccessResponse extends Response {
   constructor(status, data) {
     super(status);
     this.body.meta.totalCount = data ? data.SecurityGroups.length : 0;
-    this.body.data = JSON.stringify(data);
+    this.body.data = data;
+    this.body = JSON.stringify(this.body);
   }
 }
 class ErrorResponse extends Response {
