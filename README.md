@@ -16,7 +16,7 @@ This service is to get the list of EC2 security groups of an AWS account
 10. Write an end-to-end API test for the endpoint.
 11. Make response JSON:API 1.0 (https://jsonapi.org/format/1.0/) compatible.
 
-## Making a request
+## Demo: making a request
 
 - endpoint: https://2mto8yqyqi.execute-api.ap-southeast-2.amazonaws.com/dev/security-groups
 - method: GET
@@ -24,3 +24,12 @@ This service is to get the list of EC2 security groups of an AWS account
   - `Content-Type: application/vnd.api+json` without any media type parameters.
   - `Accept` optional, but it cant have any media type
   - `Authorization: bearer {options}` , options: [allow, deny, unauthorized]
+
+## How to start
+
+1. run `npm install` or `yarn`
+
+## How to run test
+
+1. run `npm test` to generate a `test coverage report`
+2. run `npm run test:e2e` to do a e2e testing
