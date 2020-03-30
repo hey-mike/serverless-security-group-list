@@ -5,12 +5,35 @@
   response:
     status: 401
 
-- name: should get list of security groups
+- name: should deny user request with status 403
   endpoint:
     method: GET
     path: /security-groups
   request:
     headers:
+      'Content-Type': 'application/vnd.api+json'
+      Authorization: bearer deny
+  response:
+    status: 403
+
+- name: should return Unsupported Media Type with status code 415
+  endpoint:
+    method: GET
+    path: /security-groups
+  request:
+    headers:
+      Authorization: bearer allow
+  response:
+    status: 415
+
+- name: should get list of security groups with status 200
+  endpoint:
+    method: GET
+    path: /security-groups
+  request:
+    headers:
+      'Content-Type': application/vnd.api+json
+      Accept: application/vnd.api+json
       Authorization: bearer allow
   response:
     status: 200
