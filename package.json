@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "aws-sdk": "^2.648.0",
-    "jest": "^25.2.3"
+    "jest": "^25.2.3",
+    "middy": "^0.34.0"
   },
   "husky": {
     "hooks": {

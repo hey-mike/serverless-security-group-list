@@ -1,4 +1,7 @@
 module.exports.event = {
+  headers: {
+    'Content-Type': 'application/vnd.api+json'
+  },
   body: {
     customerId: '1234'
   }
