@@ -15,3 +15,10 @@ This service is to get the list of EC2 security groups of an AWS account
 9. More info: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
 10. Write an end-to-end API test for the endpoint.
 11. Make response JSON:API 1.0 (https://jsonapi.org/format/1.0/) compatible.
+
+## Making a request
+
+- header
+  - `Content-Type: application/vnd.api+json` without any media type parameters.
+  - `Accept` optional, but it cant have any media type
+  - `Authorization: bearer {options}` , options: [allow, deny, unauthorized]
