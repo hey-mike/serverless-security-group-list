@@ -11,7 +11,6 @@ describe('Response class', () => {
     expect(response.body).toHaveProperty('meta');
     expect(response.body.meta).toHaveProperty('copyright');
     expect(response.body.meta).toHaveProperty('authors');
-    expect(response.body.meta).toHaveProperty('totalCount');
   });
 });
 
@@ -23,6 +22,7 @@ describe('Success Response class', () => {
     expect(response).toHaveProperty('statusCode');
     expect(response).toHaveProperty('body');
     expect(response.body).toHaveProperty('data');
+    expect(response.body.meta).toHaveProperty('totalCount');
     expect(response.body).not.toHaveProperty('errors');
   });
   it('should create a Response with status 200 with empty list', () => {

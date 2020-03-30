@@ -9,8 +9,7 @@ class Response {
     this.body = {
       meta: {
         copyright: 'Copyright 2020 @Michael Luo.',
-        authors: ['Michael Luo'],
-        totalCount: 0
+        authors: ['Michael Luo']
       }
     };
   }
