@@ -1,4 +1,5 @@
 const { Response, SuccessResponse, ErrorResponse } = require('../../../src/api/utils/response');
+const { SuccessPayload, ErrorPayload } = require('../../../src/api/utils/payload');
 const { emptySecurityList, securityList } = require('../../mocks/securityGroups');
 
 describe('Utils: Response class', () => {
@@ -20,7 +21,8 @@ describe('Utils: Success Response class', () => {
     expect(response).toHaveProperty('body');
   });
   it('should create a Response with status 200 with empty list', () => {
-    let response = new SuccessResponse(200, emptySecurityList);
+    const payload = new SuccessPayload('https://test.com', emptySecurityList);
+    let response = new SuccessResponse(200, payload);
     expect(response.statusCode).toBe(200);
 
     const body = JSON.parse(response.body);
@@ -28,7 +30,9 @@ describe('Utils: Success Response class', () => {
     expect(body.meta.totalCount).toBe(0);
   });
   it('should create a Response with status 200 with full list', () => {
-    let response = new SuccessResponse(200, securityList);
+    const payload = new SuccessPayload('https://test.com', securityList);
+
+    let response = new SuccessResponse(200, payload);
     expect(response.statusCode).toBe(200);
 
     const body = JSON.parse(response.body);
@@ -39,7 +43,8 @@ describe('Utils: Success Response class', () => {
 
 describe('Utils: Error Response class', () => {
   it('should create a Error Response instance', () => {
-    const response = new ErrorResponse(null, null);
+    const payload = new ErrorPayload(null);
+    const response = new ErrorResponse(null, payload);
     expect(response).toBeDefined();
     expect(response).toHaveProperty('headers');
     expect(response).toHaveProperty('statusCode');
@@ -50,25 +55,28 @@ describe('Utils: Error Response class', () => {
     expect(body).toHaveProperty('errors');
   });
   it('should create a Response with status 403', () => {
-    const errorMsg = new Error({
-      message: 'test'
-    });
-    const response = new ErrorResponse(403, errorMsg);
+    const errorMsg = {
+      message: 'test error'
+    };
+    const errors = new ErrorPayload([errorMsg]);
+    const response = new ErrorResponse(403, errors);
+
     expect(response.statusCode).toBe(403);
 
     const body = JSON.parse(response.body);
     expect(body).toHaveProperty('errors');
-    expect(body.errors).toEqual([errorMsg.message]);
+    expect(body.errors).toEqual([errorMsg]);
   });
   it('should create a Response with status 500', () => {
-    const errorMsg = new Error({
-      message: 'test'
-    });
-    const response = new ErrorResponse(500, errorMsg);
+    const errorMsg = {
+      message: 'test error'
+    };
+    const errors = new ErrorPayload([errorMsg]);
+    const response = new ErrorResponse(500, errors);
     expect(response.statusCode).toBe(500);
 
     const body = JSON.parse(response.body);
     expect(body).toHaveProperty('errors');
-    expect(body.errors).toEqual([errorMsg.message]);
+    expect(body.errors).toEqual([errorMsg]);
   });
 });

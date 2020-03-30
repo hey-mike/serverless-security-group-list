@@ -11,17 +11,14 @@ class Response {
 }
 
 class SuccessResponse extends Response {
-  constructor(status, data) {
+  constructor(status, payload) {
     super(status);
-    const payload = new SuccessPayload(data);
     this.body = JSON.stringify(payload);
   }
 }
 class ErrorResponse extends Response {
-  constructor(status, error) {
+  constructor(status, errors) {
     super(status);
-    const errors = new ErrorPayload();
-    errors.addError(error);
     this.body = JSON.stringify(errors);
   }
 }

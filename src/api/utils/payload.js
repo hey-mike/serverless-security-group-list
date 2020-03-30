@@ -8,10 +8,13 @@ class Payload {
 }
 
 class SuccessPayload extends Payload {
-  constructor(body) {
-    super();
+  constructor(link, body) {
+    super(link);
     this.meta.totalCount = body.SecurityGroups.length;
     this.data = body.SecurityGroups;
+    this.link = {
+      self: link
+    };
   }
 }
 class ErrorPayload extends Payload {
