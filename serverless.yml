@@ -30,6 +30,14 @@ provider:
         - 'ec2:DescribeSecurityGroups'
       Resource: '*'
 
+  environment:
+    GW_URL:
+      Fn::Join:
+        - ''
+        - - 'https://'
+          - Ref: 'ApiGatewayRestApi'
+          - '.execute-api.${self:custom.region}.amazonaws.com/${self:custom.stage}'
+
 # you can define service wide environment variables here
 #  environment:
 #    variable1: value1

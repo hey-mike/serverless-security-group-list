@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 class Response {
   constructor(status) {
     this.headers = {
@@ -7,26 +9,24 @@ class Response {
     this.body = {
       meta: {
         copyright: 'Copyright 2020 @Michael Luo.',
-        authors: ['Michael Luo']
+        authors: ['Michael Luo'],
+        totalCount: 0
       }
     };
-  }
-
-  isString(value) {
-    return typeof value === 'string' || value instanceof String;
   }
 }
 
 class SuccessResponse extends Response {
   constructor(status, data) {
     super(status);
-    this.body.data = this.isString(data) ? data : JSON.stringify(data);
+    this.body.meta.totalCount = data ? data.SecurityGroups.length : 0;
+    this.body.data = JSON.stringify(data);
   }
 }
 class ErrorResponse extends Response {
   constructor(status, error) {
     super(status);
-    this.body.errors = this.isString(error) ? error : JSON.stringify(error);
+    this.body.errors = JSON.stringify(error);
   }
 }
 

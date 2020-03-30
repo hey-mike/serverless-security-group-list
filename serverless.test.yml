@@ -9,5 +9,8 @@
   endpoint:
     method: GET
     path: /security-groups
+  request:
+    headers:
+      Authorization: bearer allow
   response:
     status: 200

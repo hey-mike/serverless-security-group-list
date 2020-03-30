@@ -9,6 +9,9 @@ describe('Response class', () => {
     expect(response).toHaveProperty('statusCode');
     expect(response).toHaveProperty('body');
     expect(response.body).toHaveProperty('meta');
+    expect(response.body.meta).toHaveProperty('copyright');
+    expect(response.body.meta).toHaveProperty('authors');
+    expect(response.body.meta).toHaveProperty('totalCount');
   });
 });
 
@@ -22,14 +25,17 @@ describe('Success Response class', () => {
     expect(response.body).toHaveProperty('data');
     expect(response.body).not.toHaveProperty('errors');
   });
-  it('should create a Response with status 200', () => {
+  it('should create a Response with status 200 with empty list', () => {
     let response = new SuccessResponse(200, emptySecurityList);
     expect(response.statusCode).toBe(200);
     expect(response.body.data).toBe(JSON.stringify(emptySecurityList));
-
-    response = new SuccessResponse(200, JSON.stringify(securityList));
+    expect(response.body.meta.totalCount).toBe(0);
+  });
+  it('should create a Response with status 200 with full list', () => {
+    let response = new SuccessResponse(200, securityList);
     expect(response.statusCode).toBe(200);
     expect(response.body.data).toBe(JSON.stringify(securityList));
+    expect(response.body.meta.totalCount).toBe(securityList.SecurityGroups.length);
   });
   it('should create a Response with status 201', () => {
     const response = new SuccessResponse(201, null);
@@ -48,15 +54,15 @@ describe('Error Response class', () => {
     expect(response.body).toHaveProperty('errors');
   });
   it('should create a Response with status 403', () => {
-    const testMsg = JSON.stringify({ message: 'test' });
+    const testMsg = { message: 'test' };
     const response = new ErrorResponse(403, testMsg);
     expect(response.statusCode).toBe(403);
-    expect(response.body.errors).toBe(testMsg);
+    expect(response.body.errors).toBe(JSON.stringify(testMsg));
   });
   it('should create a Response with status 500', () => {
-    const testMsg = JSON.stringify({ message: 'test' });
+    const testMsg = { message: 'test' };
     const response = new ErrorResponse(500, testMsg);
     expect(response.statusCode).toBe(500);
-    expect(response.body.errors).toBe(testMsg);
+    expect(response.body.errors).toBe(JSON.stringify(testMsg));
   });
 });
